@@ -115,8 +115,16 @@
 
   .tbl-label { font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
     color: var(--ink); margin: 26px 0 4px; }
+  .sub-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--muted); font-weight: 600; margin: 18px 0 0; }
   hr.subtle { border: none; border-top: 1px solid var(--line); margin: 30px 0; }
   .foot-note { font-size: 0.82rem; color: var(--muted); margin: 10px 0 0; }
+
+  .audit-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 10px; }
+  .audit-filters label { font-size: 0.82rem; color: var(--muted); }
+  .audit-filters select { font: inherit; font-size: 0.85rem; color: var(--ink);
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; }
+  .audit-count { font-size: 0.82rem; color: var(--muted); }
 
   details.faixas-rule { margin-top: 4px; }
   details.faixas-rule summary { cursor: pointer; font-size: 0.9rem; color: var(--accent);
@@ -179,11 +187,19 @@
   <section>
     <h2>Seus resultados até o momento</h2>
 
+    <p class="case-badge"><span>Destaque</span>A primeira cirurgia da parceria aconteceu em junho.</p>
+
     <p class="tbl-label">Agenda de consulta</p>
+
+    <p class="sub-label">Totais</p>
     <div class="stats">
       <div class="stat"><span class="stat-num">2,1 &rarr; 6,1</span><span class="stat-label">consultas por dia</span><span class="stat-sub">2,1 · 3,5 · 3,9 · 6,1</span></div>
-      <div class="stat"><span class="stat-num">1,1 &rarr; 4,4</span><span class="stat-label">novos pacientes por dia</span><span class="stat-sub">1,1 · 2,0 · 3,1 · 4,4</span></div>
       <div class="stat"><span class="stat-num">R$ 148 &rarr; R$ 269</span><span class="stat-label">por hora de consulta</span><span class="stat-sub">R$ 148 · R$ 196 · R$ 309 · R$ 269</span></div>
+    </div>
+
+    <p class="sub-label">Somente as novas</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">1,1 &rarr; 4,4</span><span class="stat-label">novos pacientes por dia</span><span class="stat-sub">1,1 · 2,0 · 3,1 · 4,4</span></div>
       <div class="stat"><span class="stat-num">R$ 282 &rarr; R$ 377</span><span class="stat-label">por hora, primeiras consultas</span><span class="stat-sub">R$ 282 · R$ 343 · R$ 383 · R$ 377</span></div>
     </div>
 
@@ -193,9 +209,59 @@
       <div class="stat"><span class="stat-num">R$ 145 &rarr; R$ 366</span><span class="stat-label">por hora de procedimento</span><span class="stat-sub">R$ 145 · R$ 219 · R$ 229 · R$ 366</span></div>
     </div>
 
-    <p class="case-badge"><span>Cirurgia</span>A primeira realizada em julho.</p>
-
     <p class="foot-note">Série de abril a julho, mês a mês. Julho parcial, atualiza no fechamento do mês.</p>
+
+    <details class="faixas-rule audit">
+      <summary>Ver a auditoria da agenda de consulta, item a item</summary>
+      <div class="audit-filters">
+        <label>Mês <select id="af-mes"><option value="">Todos</option><option value="2026-04">Abril</option><option value="2026-05">Maio</option><option value="2026-06">Junho</option><option value="2026-07">Julho</option></select></label>
+        <label>Tipo <select id="af-tipo"><option value="">Todos</option><option>Primeira paga</option><option>Retorno</option><option>Cortesia</option><option>Falta</option></select></label>
+        <span class="audit-count" id="af-count"></span>
+      </div>
+      <div class="table-wrap"><table class="rule audit-table"><thead><tr><th>Data</th><th>Tipo</th><th>Convênio</th><th>Valor</th><th>Fonte</th></tr></thead><tbody id="af-body"></tbody></table></div>
+      <p class="foot-note">Valores faturados por atendimento. O valor-hora publicado usa o honorário médico: faturado × 70,8% até maio e × 79,8% de junho em diante. Julho usa o valor real da fatura quando ela já existe; o resto sai da tabela de preços vigente.</p>
+    </details>
+
+    <script type="application/json" id="af-data">[{"d":"2026-04-06","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-04-06","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-09","t":"Primeira paga","c":"Casu","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-04-09","t":"Primeira paga","c":"Sulamérica Saúde","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-04-09","t":"Retorno","c":"Cemig Saúde","v":0,"f":null},{"d":"2026-04-13","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-04-13","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-04-13","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-04-16","t":"Retorno","c":"Camed","v":0,"f":null},{"d":"2026-04-16","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-20","t":"Primeira paga","c":"Particular","v":400.0,"f":"tabela"},{"d":"2026-04-20","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-04-23","t":"Primeira paga","c":"Casu","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-04-23","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-04-23","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-23","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-23","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-27","t":"Primeira paga","c":"Caixa","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-04-27","t":"Retorno","c":"Camed","v":0,"f":null},{"d":"2026-04-27","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-04-30","t":"Primeira paga","c":"Cassi","v":94.3,"f":"tabela"},{"d":"2026-05-07","t":"Primeira paga","c":"Cassi","v":94.3,"f":"tabela"},{"d":"2026-05-07","t":"Primeira paga","c":"Particular","v":400.0,"f":"tabela"},{"d":"2026-05-07","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-05-07","t":"Retorno","c":"Camed","v":0,"f":null},{"d":"2026-05-11","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-05-11","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-11","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-14","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-18","t":"Cortesia","c":"Cortesia","v":null,"f":null},{"d":"2026-05-18","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-25","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-05-25","t":"Primeira paga","c":"Amil","v":144.21,"f":"tabela"},{"d":"2026-05-25","t":"Primeira paga","c":"Particular","v":400.0,"f":"tabela"},{"d":"2026-05-25","t":"Primeira paga","c":"Particular","v":400.0,"f":"tabela"},{"d":"2026-05-25","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-05-25","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-25","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-28","t":"Primeira paga","c":"Cassi","v":94.3,"f":"tabela"},{"d":"2026-05-28","t":"Primeira paga","c":"Fundação Libertas","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-05-28","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-05-28","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-05-28","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-05-28","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-06-01","t":"Falta","c":"Cassi","v":null,"f":null},{"d":"2026-06-01","t":"Primeira paga","c":"Copass Saúde","v":122.0,"f":"tabela"},{"d":"2026-06-03","t":"Primeira paga","c":"Desconto especial","v":250.0,"f":"tabela"},{"d":"2026-06-08","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-06-08","t":"Primeira paga","c":"Geap","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-06-08","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-08","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-06-08","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-06-09","t":"Primeira paga","c":"Amil","v":144.21,"f":"tabela"},{"d":"2026-06-11","t":"Primeira paga","c":"Amil","v":144.21,"f":"tabela"},{"d":"2026-06-11","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-15","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-06-15","t":"Primeira paga","c":"Caixa","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-06-15","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-15","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-06-15","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-06-15","t":"Primeira paga","c":"Solidária desconto","v":250.0,"f":"tabela"},{"d":"2026-06-15","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-06-16","t":"Primeira paga","c":"Copass Saúde","v":122.0,"f":"tabela"},{"d":"2026-06-16","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-06-18","t":"Falta","c":"Particular","v":null,"f":null},{"d":"2026-06-18","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-18","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-18","t":"Primeira paga","c":"Solidária desconto","v":250.0,"f":"tabela"},{"d":"2026-06-18","t":"Primeira paga","c":"Sulamérica Saúde","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-06-18","t":"Retorno","c":"Camed","v":0,"f":null},{"d":"2026-06-18","t":"Retorno","c":"Copass Saúde","v":0,"f":null},{"d":"2026-06-22","t":"Cortesia","c":"Clínica Solidária","v":null,"f":null},{"d":"2026-06-22","t":"Falta","c":"Particular com desconto","v":null,"f":null},{"d":"2026-06-22","t":"Primeira paga","c":"Camed","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-06-22","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-22","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-22","t":"Primeira paga","c":"Particular com desconto","v":250.0,"f":"tabela"},{"d":"2026-06-25","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-25","t":"Primeira paga","c":"Particular","v":330.0,"f":"tabela"},{"d":"2026-06-25","t":"Retorno","c":"Geap","v":0,"f":null},{"d":"2026-06-25","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-01","t":"Primeira paga","c":"Particular","v":330.0,"f":"log"},{"d":"2026-07-02","t":"Primeira paga","c":"Cassi","v":94.3,"f":"tabela"},{"d":"2026-07-02","t":"Primeira paga","c":"Casu","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-02","t":"Primeira paga","c":"Cemig Saúde","v":116.0,"f":"tabela"},{"d":"2026-07-02","t":"Primeira paga","c":"Particular","v":350.0,"f":"tabela"},{"d":"2026-07-02","t":"Primeira paga","c":"Particular com desconto","v":400.0,"f":"log"},{"d":"2026-07-02","t":"Primeira paga","c":"Particular com desconto","v":400.0,"f":"log"},{"d":"2026-07-02","t":"Primeira paga","c":"Solidária desconto","v":250.0,"f":"log"},{"d":"2026-07-02","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-06","t":"Primeira paga","c":"Casu","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-06","t":"Primeira paga","c":"Cemig Saúde","v":116.0,"f":"tabela"},{"d":"2026-07-06","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"tabela"},{"d":"2026-07-06","t":"Retorno","c":"Copass Saúde","v":0,"f":null},{"d":"2026-07-06","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-09","t":"Primeira paga","c":"Cemig Saúde","v":116.0,"f":"tabela"},{"d":"2026-07-09","t":"Primeira paga","c":"Desconto diversos convênios","v":250.0,"f":"log"},{"d":"2026-07-09","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"log"},{"d":"2026-07-09","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"log"},{"d":"2026-07-09","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"log"},{"d":"2026-07-09","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-09","t":"Retorno","c":"Sulamérica Saúde","v":0,"f":null},{"d":"2026-07-13","t":"Cortesia","c":"Cortesia","v":null,"f":null},{"d":"2026-07-13","t":"Primeira paga","c":"Cassi","v":94.3,"f":"tabela"},{"d":"2026-07-13","t":"Primeira paga","c":"Particular","v":350.0,"f":"tabela"},{"d":"2026-07-13","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"tabela"},{"d":"2026-07-13","t":"Retorno","c":"Copass Saúde","v":0,"f":null},{"d":"2026-07-13","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-15","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"log"},{"d":"2026-07-16","t":"Primeira paga","c":"Amil","v":144.21,"f":"tabela"},{"d":"2026-07-16","t":"Primeira paga","c":"Copass Saúde","v":122.0,"f":"tabela"},{"d":"2026-07-16","t":"Primeira paga","c":"Desconto especial","v":280.0,"f":"tabela"},{"d":"2026-07-16","t":"Primeira paga","c":"Sulamérica Saúde","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-16","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-20","t":"Primeira paga","c":"Amil","v":144.21,"f":"tabela"},{"d":"2026-07-20","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"tabela"},{"d":"2026-07-20","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"tabela"},{"d":"2026-07-20","t":"Retorno","c":"Amil","v":0,"f":null},{"d":"2026-07-20","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-20","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-20","t":"Retorno","c":"Particular","v":0,"f":null},{"d":"2026-07-21","t":"Falta","c":"Cassi","v":null,"f":null},{"d":"2026-07-21","t":"Primeira paga","c":"Particular","v":350.0,"f":"tabela"},{"d":"2026-07-21","t":"Primeira paga","c":"Particular","v":350.0,"f":"tabela"},{"d":"2026-07-21","t":"Primeira paga","c":"Particular com desconto","v":280.0,"f":"tabela"},{"d":"2026-07-22","t":"Primeira paga","c":"Particular","v":350.0,"f":"tabela"},{"d":"2026-07-23","t":"Falta","c":"Particular com desconto","v":null,"f":null},{"d":"2026-07-23","t":"Primeira paga","c":"Caixa","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-23","t":"Primeira paga","c":"Geap","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-23","t":"Primeira paga","c":"Geap","v":124.25,"f":"média s/ IPSEMG"},{"d":"2026-07-23","t":"Primeira paga","c":"Particular com desconto","v":400.0,"f":"log"},{"d":"2026-07-23","t":"Retorno","c":"Cemig Saúde","v":0,"f":null},{"d":"2026-07-23","t":"Retorno","c":"Particular","v":0,"f":null}]</script>
+    <script>
+    (function () {
+      var itens = JSON.parse(document.getElementById('af-data').textContent);
+      var corpo = document.getElementById('af-body');
+      var contador = document.getElementById('af-count');
+      var selMes = document.getElementById('af-mes');
+      var selTipo = document.getElementById('af-tipo');
+      var moeda = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      function esc(txt) {
+        return String(txt).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
+      function dataBr(iso) {
+        var p = String(iso).split('-');
+        return p[2] + '/' + p[1];
+      }
+
+      function valorBr(v) {
+        return (v === null || v === undefined) ? '-' : 'R$ ' + moeda.format(v);
+      }
+
+      function render() {
+        var mes = selMes.value;
+        var tipo = selTipo.value;
+        var linhas = itens.filter(function (i) {
+          return (!mes || String(i.d).slice(0, 7) === mes) && (!tipo || i.t === tipo);
+        });
+        corpo.innerHTML = linhas.map(function (i) {
+          return '<tr><td>' + dataBr(i.d) + '</td><td>' + esc(i.t || '-') + '</td><td>' + esc(i.c || '-') + '</td><td>' + valorBr(i.v) + '</td><td>' + esc(i.f || '-') + '</td></tr>';
+        }).join('');
+        contador.textContent = linhas.length + (linhas.length === 1 ? ' item' : ' itens');
+      }
+
+      selMes.addEventListener('change', render);
+      selTipo.addEventListener('change', render);
+      render();
+    })();
+    </script>
   </section>
 
   <section>
