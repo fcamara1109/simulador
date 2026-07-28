@@ -277,10 +277,22 @@
     </div>
 
     <p class="tbl-label agenda">Agenda de procedimento</p>
+
+    <p class="sub-label">Totais</p>
     <div class="stats">
-      <div class="stat"><span class="stat-num">6,2 &rarr; 9,1</span><span class="stat-label">exames por dia</span><span class="stat-sub">6,2 · 7,3 · 9,1 · 9,1</span></div>
-      <div class="stat"><span class="stat-num">R$ 145 &rarr; R$ 366</span><span class="stat-label">por hora de procedimento</span><span class="stat-sub">R$ 145 · R$ 219 · R$ 229 · R$ 366</span></div>
+      <div class="stat"><span class="stat-num">5,8 &rarr; 7,1</span><span class="stat-label">exames por dia</span><span class="stat-sub">5,8 · 7,1 · 8,9 · 7,1</span></div>
+      <div class="stat"><span class="stat-num">R$ 165 &rarr; R$ 268</span><span class="stat-label">por hora de procedimento</span><span class="stat-sub">R$ 165 · R$ 188 · R$ 233 · R$ 268</span></div>
     </div>
+
+    <p class="sub-label">Somente os primeiros</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num">4,4 &rarr; 6,0</span><span class="stat-label">pacientes por dia</span><span class="stat-sub">4,4 · 6,1 · 6,6 · 6,0</span></div>
+      <div class="stat"><span class="stat-num">R$ 163 &rarr; R$ 195</span><span class="stat-label">por hora, primeiros procedimentos</span><span class="stat-sub">R$ 163 · R$ 169 · R$ 237 · R$ 195</span></div>
+    </div>
+
+    <p class="foot-note">Primeiro é o paciente que chegou sem consulta nem exame antes; upsell é quem veio depois de uma consulta ou de um exame. O valor-hora usa o honorário médico: 25,4% do faturado até maio e 26,6% de junho em diante.</p>
+    <p class="foot-note">A cirurgia entra na agenda com duração estimada de 2h, porque a duração real não fica registrada. Julho tem 1 cirurgia, de honorário negociado em R$ 3.000, fora da alíquota.</p>
+    <p class="foot-note">Os dados começam em abril de 2026, então o corte entre primeiros e upsell de abril é teto: quem já tinha passado antes de abril não aparece. A série anterior foi recalculada com o mesmo método validado da agenda de consulta: log individual primeiro, tabela date-aware e volume pelo Asa.</p>
 
     <p class="foot-note series-note">Série de abril a julho, mês a mês. Julho parcial, atualiza no fechamento do mês.</p>
 
