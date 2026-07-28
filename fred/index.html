@@ -133,13 +133,6 @@
     background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; padding: 4px 6px; }
   .audit-count { font-size: 0.82rem; color: var(--muted); }
 
-  details.faixas-rule { margin-top: 4px; }
-  details.faixas-rule summary { cursor: pointer; font-size: 0.9rem; color: var(--accent);
-    font-weight: 600; padding: 6px 0; list-style: none; }
-  details.faixas-rule summary::-webkit-details-marker { display: none; }
-  details.faixas-rule summary::before { content: "\25B8\00a0"; font-size: 0.8em; }
-  details.faixas-rule[open] summary::before { content: "\25BE\00a0"; }
-  details.faixas-rule summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   table.rule { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums;
     margin-top: 12px; font-size: 0.9rem; }
   table.rule th { text-align: right; font-size: 0.65rem; text-transform: uppercase;
@@ -152,6 +145,79 @@
     font-weight: 600; font-family: var(--serif); font-size: 0.95rem; white-space: normal; }
   table.rule td:last-child { font-weight: 600; color: var(--ink); }
   table.rule tr:last-child td { border-bottom: none; }
+
+  .faixa-msg { background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 10px; padding: 12px 16px; margin: 16px 0 4px; font-size: 0.93rem;
+    color: var(--ink-soft); }
+  .faixa-msg strong { color: var(--ink); }
+  .rule-note { font-size: 0.82rem; color: var(--muted); margin: 8px 0 0; }
+  .link-btn { background: none; border: none; padding: 0; font: inherit; font-size: 0.82rem;
+    color: var(--accent); font-weight: 600; cursor: pointer; text-decoration: underline;
+    text-underline-offset: 2px; }
+
+  .extrato { margin-top: 20px; font-variant-numeric: tabular-nums; }
+  .ext-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+  .ext-row .lbl { color: var(--ink-soft); }
+  .ext-row .val { font-weight: 600; color: var(--ink); white-space: nowrap; }
+  .ext-row .val.neg { color: var(--danger); }
+  .ext-row.total { border-bottom: none; padding-top: 12px; }
+  .ext-row.total .lbl { font-weight: 600; color: var(--ink); }
+  .ext-row.total .val { font-family: var(--serif); font-size: 1.15rem; }
+  .split { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 14px; }
+  @media (max-width: 480px) { .split { grid-template-columns: 1fr; } }
+  .split-cell { border-radius: 10px; padding: 14px 18px; }
+  .split-voce { background: var(--accent-soft); border: 1px solid var(--accent); }
+  .split-voce .split-num { font-family: var(--serif); font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-weight: 600; color: var(--accent); line-height: 1.05; }
+  .split-eu { background: var(--paper); border: 1px solid var(--line); }
+  .split-eu .split-num { font-family: var(--serif); font-size: 1.3rem; font-weight: 600;
+    color: var(--ink); }
+  .split-lbl { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+  /* Opção 5: mistura */
+  .sim-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; margin: 0 0 2px; }
+  .sim-title-sub { font-size: 0.9rem; color: var(--muted); margin: 0 0 18px; }
+  .roas-block { margin-top: 18px; }
+  .roas-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .roas-pill { font: inherit; font-size: 0.88rem; font-variant-numeric: tabular-nums;
+    border: 1px solid; border-radius: 999px; padding: 5px 14px;
+    background: var(--paper-2); cursor: pointer; font-weight: 600; }
+  .roas-pill:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .roas-pill.p-low { color: #9F5A14; border-color: #9F5A14; }
+  .roas-pill.p-mid { color: #257550; border-color: #257550; }
+  .roas-pill.p-high { color: #0F3D2E; border-color: #0F3D2E; }
+  .roas-pill.on.p-low { background: #9F5A14; color: #FFFFFF; }
+  .roas-pill.on.p-mid { background: #257550; color: #FFFFFF; }
+  .roas-pill.on.p-high { background: #0F3D2E; color: #FFFFFF; }
+  .sim-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 10px 32px; align-items: start; margin-top: 4px; }
+  @media (max-width: 680px) { .sim-top { grid-template-columns: minmax(0, 1fr); } }
+  .faixa-msg.compact { margin: 0 0 10px; padding: 9px 13px; font-size: 0.86rem; }
+  .faixa-msg.compact:empty { display: none; }
+  table.rule.compact { margin-top: 0; }
+  table.rule.compact th { padding: 0 0 7px 8px; font-size: 0.6rem; }
+  table.rule.compact td { padding: 6px 4px 6px 8px; font-size: 0.82rem; }
+  table.rule.compact td:first-child { font-size: 0.85rem; padding-left: 6px; }
+  table.rule.compact .you-tag { font-size: 0.56rem; padding: 2px 7px; margin-left: 6px; }
+  .ext-row .lbl .link-btn { margin-left: 8px; }
+  .ext-note { display: none; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 8px; padding: 11px 14px; margin: 9px 0 4px; font-size: 0.88rem;
+    color: var(--ink-soft); }
+  .ext-note.open { display: block; }
+  .ext-note p { margin: 0 0 8px; }
+  .ext-note p:last-child { margin-bottom: 0; }
+  .ext-note ul { margin: 6px 0 8px; padding-left: 18px; }
+  .ext-note li { margin: 3px 0; }
+  .ext-note b { color: var(--ink); }
+  table.rule tr.on2 td { background: var(--accent-soft); border-top: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent); }
+  table.rule tr.on2 td:first-child { border-radius: 8px 0 0 8px; }
+  table.rule tr.on2 td:last-child { border-radius: 0 8px 8px 0; }
+  .you-tag { display: none; background: var(--accent); color: #FFFFFF; border-radius: 999px;
+    font-family: var(--sans); font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 2px 9px; margin-left: 9px; vertical-align: 2px; }
+  tr.on2 .you-tag { display: inline-block; }
 
   footer { margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--line); }
   .sign { font-family: var(--serif); font-size: 1.15rem; color: var(--ink); }
@@ -171,7 +237,7 @@
     section, .axis, footer { break-inside: avoid; }
     .table-wrap { overflow-x: visible; }
     table.exemplo, table.exemplo.t1, table.exemplo.t2 { min-width: 0; }
-    details.faixas-rule > *:not(summary) { display: block !important; }
+    .ext-note { display: block !important; }
   }
 </style>
 
@@ -305,16 +371,78 @@
 
   <section>
     <h2>Como eu cobro</h2>
-    <p class="section-note">Coloque os honorários que o funil gerou no mês e veja pra onde vai cada real.</p>
+    <p class="section-note">Uma conta só, sobre o dinheiro novo, e você paga <strong>depois</strong> de já ter recebido. A mídia eu adianto, você reembolsa. Sem setup.</p>
     <div class="sim">
-      <label class="eyebrow sim-label" for="sim-hon">Honorários gerados no mês</label>
-      <div class="sim-input">R$ <input id="sim-hon" type="text" inputmode="decimal" value="9.669,24" autocomplete="off" aria-label="Honorários gerados no mês, em reais"></div>
-      <div class="stats sim-stats">
-        <div class="stat"><span class="stat-num" id="sim-fred"></span><span class="stat-label">sobra pra você</span><span class="stat-sub" id="sim-fred-sub"></span></div>
-        <div class="stat"><span class="stat-num c-red" id="sim-custos"></span><span class="stat-label">paga os custos</span><span class="stat-sub" id="sim-custos-sub"></span></div>
-        <div class="stat"><span class="stat-num c-ink" id="sim-parte"></span><span class="stat-label">fica comigo</span><span class="stat-sub" id="sim-parte-sub"></span></div>
+      <p class="sim-title">Simule seu honorário</p>
+      <p class="sim-title-sub">Coloque um valor e veja quanto fica com você.</p>
+
+      <div class="sim-top">
+        <div>
+          <label class="eyebrow sim-label" for="hon-e">Honorários gerados no mês</label>
+          <div class="sim-input">R$ <input id="hon-e" type="text" inputmode="decimal" value="12.000" autocomplete="off" aria-label="Honorários gerados no mês, em reais"></div>
+
+          <div class="roas-block">
+            <span class="eyebrow">Eficiência das campanhas</span>
+            <div class="roas-pills" role="group" aria-label="Honorário gerado por real investido em mídia">
+              <button class="roas-pill p-low" data-roas="3" type="button">Baixa: 3</button>
+              <button class="roas-pill p-mid on" data-roas="4" type="button">Saudável: 4</button>
+              <button class="roas-pill p-high" data-roas="5" type="button">Alta: 5</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="faixa-msg compact" id="msg-e"></div>
+          <div class="table-wrap">
+            <table class="rule compact" id="tbl-e">
+              <thead>
+                <tr><th>Honorários no mês</th><th>Sua fatia</th><th>Minha</th><th>Estrutura</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Até 7,5 mil<span class="you-tag">sua faixa</span></td><td class="fatia">o resto</td><td>R$ 2.000</td><td>R$ 500</td></tr>
+                <tr><td>7,5 a 15 mil<span class="you-tag">sua faixa</span></td><td class="fatia">70%</td><td>30%</td><td>R$ 1.200</td></tr>
+                <tr><td>15 a 30 mil<span class="you-tag">sua faixa</span></td><td class="fatia">75%</td><td>25%</td><td>R$ 2.400</td></tr>
+                <tr><td>30 a 50 mil<span class="you-tag">sua faixa</span></td><td class="fatia">80%</td><td>20%</td><td>R$ 4.200</td></tr>
+                <tr><td>50 a 100 mil<span class="you-tag">sua faixa</span></td><td class="fatia">85%</td><td>15%</td><td>R$ 6.400</td></tr>
+                <tr><td>Acima de 100 mil<span class="you-tag">sua faixa</span></td><td class="fatia">90%</td><td>10%</td><td>R$ 8.900</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <p class="foot-note">Mídia estimada pelo desempenho real do funil hoje: R$ 5,43 de honorário por R$ 1 de mídia. Alíquota e custo fixo seguem as faixas mais abaixo, sobre o honorário bruto.</p>
+
+      <div class="extrato">
+        <div class="ext-row"><span class="lbl">Honorários que o funil gerou</span><span class="val" id="ext-hon-e"></span></div>
+        <div class="ext-row"><span class="lbl">(−) Campanhas de mídia <button class="link-btn" type="button" data-note="note-midia-e" aria-expanded="false">detalhes</button></span><span class="val neg" id="ext-midia-e"></span></div>
+        <div class="ext-note" id="note-midia-e">
+          <p>É o que as plataformas de anúncio cobram (Google e Facebook, por exemplo) pra colocar você na frente do paciente certo. Não fica um real comigo: vai inteiro pra plataforma. Eu adianto do meu bolso e você só reembolsa depois que o honorário já caiu na sua conta.</p>
+        </div>
+        <div class="ext-row"><span class="lbl">(−) Estrutura da operação <button class="link-btn" type="button" data-note="note-fixo-e" aria-expanded="false">detalhes</button></span><span class="val neg" id="ext-fixo-e"></span></div>
+        <div class="ext-note" id="note-fixo-e">
+          <p>É tudo que trabalha pra você todos os dias, além das campanhas:</p>
+          <ul>
+            <li><b>Inteligência artificial de ponta</b> pra atender paciente, escrever e analisar: só de assinatura passa de R$ 1.100 por mês, e o consumo cresce com o volume</li>
+            <li><b>Servidores, automações e os canais de WhatsApp</b> da operação</li>
+            <li><b>Profissionais de apoio pontual</b>: mídia, design, texto, redes sociais, foto e vídeo</li>
+            <li><b>API oficial do WhatsApp</b>, cobrada por mensagem: é o custo que mais cresce quando a operação ganha escala</li>
+            <li><b>Softwares e serviços cobrados por uso</b>, que entram conforme a operação pede</li>
+          </ul>
+          <p>O custo fixo da sua faixa é a sua fração dessa estrutura. Ela fica mais robusta (e mais cara) conforme a operação cresce: por isso ele acompanha a faixa, e só sobe quando o seu resultado sobe.</p>
+        </div>
+        <div class="ext-row total"><span class="lbl">Sobra depois dos custos</span><span class="val" id="ext-base-e"></span></div>
+      </div>
+
+      <div class="split">
+        <div class="split-cell split-voce">
+          <div class="split-num" id="split-voce-e"></div>
+          <div class="split-lbl" id="split-voce-lbl-e"></div>
+        </div>
+        <div class="split-cell split-eu">
+          <div class="split-num" id="split-eu-e"></div>
+          <div class="split-lbl" id="split-eu-lbl-e"></div>
+        </div>
+      </div>
+
+      <p class="rule-note">As fatias valem sobre o que sobra depois da mídia e da estrutura. Quanto mais o funil gera, maior a sua fatia.</p>
     </div>
 
     <hr class="subtle">
@@ -339,7 +467,7 @@
         <tbody>
           <tr><td>Teste (2 sem)</td><td>R$ 2.000</td><td class="custo">R$ 600</td><td>—</td><td>—</td><td class="custo">R$ 0</td><td class="sobra">R$ 1.400</td></tr>
           <tr><td>Mês 1</td><td>R$ 4.000</td><td class="custo">R$ 1.200</td><td class="custo">R$ 500</td><td>R$ 2.300</td><td class="custo">R$ 2.000 <small>piso</small></td><td class="sobra">R$ 300</td></tr>
-          <tr><td>Mês 2</td><td>R$ 8.000</td><td class="custo">R$ 2.400</td><td class="custo">R$ 500</td><td>R$ 5.100</td><td class="custo">R$ 2.000 <small>piso</small></td><td class="sobra">R$ 3.100</td></tr>
+          <tr><td>Mês 2</td><td>R$ 8.000</td><td class="custo">R$ 2.400</td><td class="custo">R$ 1.200</td><td>R$ 4.400</td><td class="custo">R$ 1.320</td><td class="sobra">R$ 3.080</td></tr>
         </tbody>
       </table>
     </div>
@@ -362,32 +490,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>R$ 333</td><td>R$ 16.000</td><td class="custo">R$ 4.800</td><td class="custo">R$ 1.200</td><td>R$ 10.000</td><td>30%</td><td class="custo">R$ 3.000</td><td class="sobra">R$ 7.000</td></tr>
+          <tr><td>R$ 333</td><td>R$ 16.000</td><td class="custo">R$ 4.800</td><td class="custo">R$ 2.400</td><td>R$ 8.800</td><td>25%</td><td class="custo">R$ 2.200</td><td class="sobra">R$ 6.600</td></tr>
           <tr><td>R$ 625</td><td>R$ 30.000</td><td class="custo">R$ 9.000</td><td class="custo">R$ 2.400</td><td>R$ 18.600</td><td>25%</td><td class="custo">R$ 4.650</td><td class="sobra">R$ 13.950</td></tr>
-          <tr><td>R$ 1.250</td><td>R$ 60.000</td><td class="custo">R$ 18.000</td><td class="custo">R$ 4.200</td><td>R$ 37.800</td><td>20%</td><td class="custo">R$ 7.560</td><td class="sobra">R$ 30.240</td></tr>
+          <tr><td>R$ 1.250</td><td>R$ 60.000</td><td class="custo">R$ 18.000</td><td class="custo">R$ 6.400</td><td>R$ 35.600</td><td>15%</td><td class="custo">R$ 5.340</td><td class="sobra">R$ 30.260</td></tr>
           <tr><td>R$ 2.083</td><td>R$ 100.000</td><td class="custo">R$ 30.000</td><td class="custo">R$ 6.400</td><td>R$ 63.600</td><td>15%</td><td class="custo">R$ 9.540</td><td class="sobra">R$ 54.060</td></tr>
           <tr><td>R$ 4.167</td><td>R$ 200.000</td><td class="custo">R$ 60.000</td><td class="custo">R$ 8.900</td><td>R$ 131.100</td><td>10%</td><td class="custo">R$ 13.110</td><td class="sobra">R$ 117.990</td></tr>
         </tbody>
       </table>
     </div>
 
-    <details class="faixas-rule">
-      <summary>Ver as faixas</summary>
-      <p class="foot-note" style="margin-top: 6px;">O honorário bruto é o que sobra dos honorários novos do mês depois de reembolsar a mídia. Ele define a alíquota e o custo fixo. A base de cálculo é o honorário bruto menos o custo fixo, e a minha parte é a alíquota sobre essa base.</p>
-      <table class="rule">
-        <thead>
-          <tr><th>Honorário bruto</th><th>Alíquota</th><th>Custo fixo</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Até R$ 7,5 mil</td><td>R$ 2.000 fixo</td><td>R$ 500</td></tr>
-          <tr><td>R$ 7,5 mil a 15 mil</td><td>30%</td><td>R$ 1.200</td></tr>
-          <tr><td>R$ 15 mil a 30 mil</td><td>25%</td><td>R$ 2.400</td></tr>
-          <tr><td>R$ 30 mil a 50 mil</td><td>20%</td><td>R$ 4.200</td></tr>
-          <tr><td>R$ 50 mil a 100 mil</td><td>15%</td><td>R$ 6.400</td></tr>
-          <tr><td>Acima de R$ 100 mil</td><td>10%</td><td>R$ 8.900</td></tr>
-        </tbody>
-      </table>
-    </details>
   </section>
 
   <footer>
@@ -398,27 +509,82 @@
 
 <script>
 (function () {
-  var RATE = 1780.42 / 9669.24; // mídia real / honorários reais do funil do tenant
+  var ROAS = 4; // eficiência default das campanhas: R$ 4 de honorário por R$ 1 de mídia
   var TIERS = [[7500, null, 500], [15000, 0.30, 1200], [30000, 0.25, 2400], [50000, 0.20, 4200], [100000, 0.15, 6400], [Infinity, 0.10, 8900]];
-  var input = document.getElementById('sim-hon');
+  var SHARES = [null, 70, 75, 80, 85, 90];
+
   function brl(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
-  function calc() {
-    var h = parseFloat(input.value.replace(/\./g, '').replace(',', '.')) || 0;
-    var midia = h * RATE;
+  function parse(el) { return parseFloat(el.value.replace(/\./g, '').replace(',', '.')) || 0; }
+
+  function engine(h, roas, tierByInput) {
+    roas = roas || ROAS;
+    var midia = h / roas;
     var bruto = h - midia;
-    var aliq, fixo;
-    for (var i = 0; i < TIERS.length; i++) { if (bruto <= TIERS[i][0]) { aliq = TIERS[i][1]; fixo = TIERS[i][2]; break; } }
-    var parte = aliq === null ? 2000 : Math.max(2000, aliq * (bruto - fixo));
-    var custos = midia + fixo;
-    var sobra = h - custos - parte;
-    document.getElementById('sim-fred').textContent = brl(sobra);
-    document.getElementById('sim-fred-sub').textContent = h > 0 ? Math.round(sobra / h * 100) + '% dos honorários' : '';
-    document.getElementById('sim-custos').textContent = brl(custos);
-    document.getElementById('sim-custos-sub').textContent = brl(midia) + ' de mídia + ' + brl(fixo) + ' de custo fixo';
-    document.getElementById('sim-parte').textContent = brl(parte);
-    document.getElementById('sim-parte-sub').textContent = (aliq === null || aliq * (bruto - fixo) < 2000) ? 'piso de R$ 2.000' : 'alíquota de ' + Math.round(aliq * 100) + '% sobre a base';
+    var tierBase = tierByInput ? h : bruto; // a faixa é definida pelo honorário gerado no mês
+    var tier = 0;
+    for (var i = 0; i < TIERS.length; i++) { if (tierBase <= TIERS[i][0]) { tier = i; break; } }
+    var aliq = TIERS[tier][1], fixo = TIERS[tier][2];
+    var base = Math.max(0, bruto - fixo);
+    var parte = aliq === null ? Math.min(2000, base) : aliq * base;
+    var piso = aliq === null;
+    var sobra = Math.max(0, base - parte);
+    var share = base > 0 ? sobra / base : 0;
+    return { h: h, midia: midia, bruto: bruto, tier: tier, aliq: aliq, fixo: fixo, base: base,
+      parte: parte, piso: piso, sobra: sobra, share: share, custos: midia + fixo };
   }
-  input.addEventListener('input', calc);
-  calc();
+
+  function faixaMsgShort(r) {
+    if (r.h <= 0 || r.tier === 0) return '';
+    return 'Você está na <strong>faixa ' + (r.tier + 1) + ' de 6</strong>: do que sobra depois dos custos, <strong>' + SHARES[r.tier] + '% é seu</strong>.';
+  }
+
+  function pctShare(r) { return Math.round(r.share * 100); }
+  function set(id, v) { document.getElementById(id).textContent = v; }
+  function setHTML(id, v) { document.getElementById(id).innerHTML = v; }
+
+  var roas = 4;
+  function render() {
+    var r = engine(parse(document.getElementById('hon-e')), roas, true);
+    set('ext-hon-e', brl(r.h));
+    set('ext-midia-e', '− ' + brl(r.midia));
+    set('ext-fixo-e', '− ' + brl(r.fixo));
+    set('ext-base-e', brl(r.base));
+    set('split-voce-e', brl(r.sobra));
+    set('split-voce-lbl-e', pctShare(r) + '% pra você');
+    set('split-eu-e', brl(r.parte));
+    set('split-eu-lbl-e', r.piso ? 'meu piso de R$ 2.000' : (100 - pctShare(r)) + '% pra mim');
+    setHTML('msg-e', faixaMsgShort(r));
+    var rows = document.querySelectorAll('#tbl-e tbody tr');
+    rows.forEach(function (tr, i) { tr.classList.toggle('on2', i === r.tier); });
+  }
+
+  document.querySelectorAll('.roas-pill').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      roas = parseInt(btn.dataset.roas, 10);
+      document.querySelectorAll('.roas-pill').forEach(function (b) { b.classList.toggle('on', b === btn); });
+      render();
+    });
+  });
+  document.querySelectorAll('[data-note]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var note = document.getElementById(btn.dataset.note);
+      var open = note.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'fechar' : 'detalhes';
+    });
+  });
+  document.getElementById('hon-e').addEventListener('input', render);
+  render();
+
+  /* gabarito: h=12.000, ROAS 4 → faixa 2, mídia 3.000, fixo 1.200, base 7.800, parte 2.340, sobra 5.460, 70% */
+  var g3 = engine(12000, 4, true);
+  console.assert(g3.tier === 1 && g3.midia === 3000 && Math.round(g3.parte) === 2340 && Math.round(g3.sobra) === 5460, 'faixa 2 errada', g3);
+  console.assert(Math.round(g3.share * 100) === 70, 'share da faixa 2 errado', g3);
+  /* h=16.000 cai na faixa 3 pelo gerado (o líquido daria faixa 2): fixo 2.400, mídia 4.000, base 9.600, parte 2.400, sobra 7.200, 75% */
+  var g4 = engine(16000, 4, true);
+  console.assert(g4.tier === 2 && g4.fixo === 2400 && Math.round(g4.sobra) === 7200 && Math.round(g4.share * 100) === 75, 'faixa pelo gerado errada', g4);
+  /* sem piso da faixa 2 em diante: h=9.600, ROAS 5 → mídia 1.920, fixo 1.200, base 6.480, parte 1.944, sobra 4.536, 70% */
+  var g5 = engine(9600, 5, true);
+  console.assert(g5.tier === 1 && Math.round(g5.parte) === 1944 && Math.round(g5.sobra) === 4536 && Math.round(g5.share * 100) === 70, 'piso indevido fora da faixa 1', g5);
 })();
 </script>
