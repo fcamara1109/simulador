@@ -115,6 +115,12 @@
   .stat-num.c-red { color: var(--danger); }
   .stat-num.c-ink { color: var(--ink); }
 
+  .teste { background: var(--accent-soft); border: 1px solid var(--accent);
+    border-radius: 10px; padding: 14px 18px; margin: 14px 0 4px; }
+  .teste .eyebrow { display: block; color: var(--accent); margin-bottom: 5px; }
+  .teste p { margin: 0; color: var(--ink-soft); }
+  .teste p strong { color: var(--ink); }
+
   .tbl-label { font-family: var(--serif); font-size: 1.05rem; font-weight: 600;
     color: var(--ink); margin: 26px 0 4px; }
   .tbl-label.agenda { font-size: 1.14rem; margin: 44px 0 0; }
@@ -248,6 +254,7 @@
       <span class="eyebrow">Dr. Frederico</span>
     </div>
     <h1>Agenda cheia. De paciente certo.</h1>
+
   </header>
 
   <section>
@@ -381,6 +388,8 @@
     </div>
   </section>
 
+
+
   <section>
     <h2>Como eu cobro</h2>
     <p class="section-note">Uma conta só, sobre o dinheiro novo, e você paga <strong>depois</strong> de já ter recebido. A mídia eu adianto, você reembolsa. Sem setup.</p>
@@ -409,14 +418,7 @@
               <thead>
                 <tr><th>Honorários no mês</th><th>Sua fatia</th><th>Minha</th><th>Estrutura</th></tr>
               </thead>
-              <tbody>
-                <tr><td>Até 7,5 mil<span class="you-tag">sua faixa</span></td><td class="fatia">o resto</td><td>R$ 2.000</td><td>R$ 500</td></tr>
-                <tr><td>7,5 a 15 mil<span class="you-tag">sua faixa</span></td><td class="fatia">70%</td><td>30%</td><td>R$ 800</td></tr>
-                <tr><td>15 a 30 mil<span class="you-tag">sua faixa</span></td><td class="fatia">75%</td><td>25%</td><td>R$ 1.600</td></tr>
-                <tr><td>30 a 50 mil<span class="you-tag">sua faixa</span></td><td class="fatia">80%</td><td>20%</td><td>R$ 3.200</td></tr>
-                <tr><td>50 a 100 mil<span class="you-tag">sua faixa</span></td><td class="fatia">85%</td><td>15%</td><td>R$ 4.800</td></tr>
-                <tr><td>Acima de 100 mil<span class="you-tag">sua faixa</span></td><td class="fatia">90%</td><td>10%</td><td>R$ 6.400</td></tr>
-              </tbody>
+              <tbody id="tbl-faixas"></tbody>
             </table>
           </div>
         </div>
@@ -476,10 +478,8 @@
             <th>Sobra<br>pra você</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tbl-calib">
           <tr><td>Teste (2 sem)</td><td>R$ 2.000</td><td class="custo">R$ 600</td><td>—</td><td>—</td><td class="custo">R$ 0</td><td class="sobra">R$ 1.400</td></tr>
-          <tr><td>Mês 1</td><td>R$ 4.000</td><td class="custo">R$ 1.200</td><td class="custo">R$ 500</td><td>R$ 2.300</td><td class="custo">R$ 2.000 <small>piso</small></td><td class="sobra">R$ 300</td></tr>
-          <tr><td>Mês 2</td><td>R$ 8.000</td><td class="custo">R$ 2.400</td><td class="custo">R$ 800</td><td>R$ 4.800</td><td class="custo">R$ 1.440</td><td class="sobra">R$ 3.360</td></tr>
         </tbody>
       </table>
     </div>
@@ -501,17 +501,12 @@
             <th>(=) Sobra<br>pra você</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>R$ 333</td><td>R$ 16.000</td><td class="custo">R$ 4.800</td><td class="custo">R$ 1.600</td><td>R$ 9.600</td><td>25%</td><td class="custo">R$ 2.400</td><td class="sobra">R$ 7.200</td></tr>
-          <tr><td>R$ 625</td><td>R$ 30.000</td><td class="custo">R$ 9.000</td><td class="custo">R$ 1.600</td><td>R$ 19.400</td><td>25%</td><td class="custo">R$ 4.850</td><td class="sobra">R$ 14.550</td></tr>
-          <tr><td>R$ 1.250</td><td>R$ 60.000</td><td class="custo">R$ 18.000</td><td class="custo">R$ 4.800</td><td>R$ 37.200</td><td>15%</td><td class="custo">R$ 5.580</td><td class="sobra">R$ 31.620</td></tr>
-          <tr><td>R$ 2.083</td><td>R$ 100.000</td><td class="custo">R$ 30.000</td><td class="custo">R$ 4.800</td><td>R$ 65.200</td><td>15%</td><td class="custo">R$ 9.780</td><td class="sobra">R$ 55.420</td></tr>
-          <tr><td>R$ 4.167</td><td>R$ 200.000</td><td class="custo">R$ 60.000</td><td class="custo">R$ 6.400</td><td>R$ 133.600</td><td>10%</td><td class="custo">R$ 13.360</td><td class="sobra">R$ 120.240</td></tr>
-        </tbody>
+        <tbody id="tbl-sim"></tbody>
       </table>
     </div>
-
   </section>
+
+
 
   <footer>
     <div class="sign">Felipe Câmara</div>
@@ -520,55 +515,122 @@
 </div>
 
 <script>
+var FAIXAS = {
+  "piso": 2000,
+  "roas_default": 4,
+  "horas_mes_exemplo": 48,
+  "midia_pct_exemplo": 0.30,
+  "faixas": [
+    { "rotulo": "Até 7,5 mil", "rotulo_longo": "Até R$ 7,5 mil", "ate": 7500, "aliquota": null, "estrutura": 500 },
+    { "rotulo": "7,5 a 15 mil", "rotulo_longo": "R$ 7,5 mil a 15 mil", "ate": 15000, "aliquota": 0.30, "estrutura": 800 },
+    { "rotulo": "15 a 30 mil", "rotulo_longo": "R$ 15 mil a 30 mil", "ate": 30000, "aliquota": 0.25, "estrutura": 1600 },
+    { "rotulo": "30 a 50 mil", "rotulo_longo": "R$ 30 mil a 50 mil", "ate": 50000, "aliquota": 0.20, "estrutura": 3200 },
+    { "rotulo": "50 a 100 mil", "rotulo_longo": "R$ 50 mil a 100 mil", "ate": 100000, "aliquota": 0.15, "estrutura": 4800 },
+    { "rotulo": "Acima de 100 mil", "rotulo_longo": "Acima de R$ 100 mil", "ate": null, "aliquota": 0.10, "estrutura": 6400 }
+  ]
+};
+
+/* Calculadora das faixas. Fonte única dos números: faixas.json (injetado acima como FAIXAS).
+   Mudou a escada ali, mudam simulador, proposta e as tabelas de exemplo das duas. */
+
+function brl(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+function pct(a) { return Math.round(a * 100) + '%'; }
+
+function faixaDe(h) {
+  for (var i = 0; i < FAIXAS.faixas.length; i++) {
+    if (FAIXAS.faixas[i].ate === null || h <= FAIXAS.faixas[i].ate) return i;
+  }
+  return FAIXAS.faixas.length - 1;
+}
+
+/* A faixa vem do honorário gerado no mês. A base é ele menos a mídia e menos a estrutura.
+   Na faixa 1 a minha parte é o piso no lugar da alíquota. */
+function engine(h, roas) {
+  var midia = h / (roas || FAIXAS.roas_default);
+  var bruto = h - midia;
+  var f = FAIXAS.faixas[faixaDe(h)];
+  var base = Math.max(0, bruto - f.estrutura);
+  var parte = f.aliquota === null ? Math.min(FAIXAS.piso, base) : f.aliquota * base;
+  var sobra = Math.max(0, base - parte);
+  return {
+    h: h, midia: midia, bruto: bruto, tier: faixaDe(h), aliquota: f.aliquota, estrutura: f.estrutura,
+    base: base, parte: parte, piso: f.aliquota === null, sobra: sobra,
+    share: base > 0 ? sobra / base : 0,
+    sharePosMidia: bruto > 0 ? sobra / bruto : 0
+  };
+}
+
+function tr(cells) { return '<tr>' + cells.join('') + '</tr>'; }
+function td(v, cls) { return '<td' + (cls ? ' class="' + cls + '"' : '') + '>' + v + '</td>'; }
+
+/* Preenche as tabelas que existirem na página. Nenhum número dessas tabelas é digitado à mão. */
+function renderTabelas() {
+  var faixas = document.getElementById('tbl-faixas');
+  if (faixas) {
+    faixas.innerHTML = FAIXAS.faixas.map(function (f) {
+      return tr([
+        td(f.rotulo + '<span class="you-tag">sua faixa</span>'),
+        td(f.aliquota === null ? 'o resto' : pct(1 - f.aliquota), 'fatia'),
+        td(f.aliquota === null ? brl(FAIXAS.piso) : pct(f.aliquota)),
+        td(brl(f.estrutura))
+      ]);
+    }).join('');
+  }
+
+  var roasEx = 1 / FAIXAS.midia_pct_exemplo;
+
+  var calib = document.getElementById('tbl-calib');
+  if (calib) {
+    calib.innerHTML += [4000, 8000].map(function (h, i) {
+      var r = engine(h, roasEx);
+      return tr([
+        td('Mês ' + (i + 1)), td(brl(r.h)), td(brl(r.midia), 'custo'), td(brl(r.estrutura), 'custo'),
+        td(brl(r.base)), td(brl(r.parte) + (r.piso ? ' <small>piso</small>' : ''), 'custo'), td(brl(r.sobra), 'sobra')
+      ]);
+    }).join('');
+  }
+
+  var sim = document.getElementById('tbl-sim');
+  if (sim) {
+    sim.innerHTML = [16000, 30000, 60000, 100000, 200000].map(function (h) {
+      var r = engine(h, roasEx);
+      return tr([
+        td(brl(h / FAIXAS.horas_mes_exemplo)), td(brl(r.h)), td(brl(r.midia), 'custo'),
+        td(brl(r.estrutura), 'custo'), td(brl(r.base)),
+        td(r.piso ? 'piso' : pct(r.aliquota)), td(brl(r.parte), 'custo'), td(brl(r.sobra), 'sobra')
+      ]);
+    }).join('');
+  }
+}
+
 (function () {
-  var ROAS = 4; // eficiência default das campanhas: R$ 4 de honorário por R$ 1 de mídia
-  var TIERS = [[7500, null, 500], [15000, 0.30, 800], [30000, 0.25, 1600], [50000, 0.20, 3200], [100000, 0.15, 4800], [Infinity, 0.10, 6400]];
-  var SHARES = [null, 70, 75, 80, 85, 90];
+  renderTabelas();
 
-  function brl(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
+  var input = document.getElementById('hon-e');
+  if (!input) return; // página sem simulador (proposta CAC)
+
   function parse(el) { return parseFloat(el.value.replace(/\./g, '').replace(',', '.')) || 0; }
-
-  function engine(h, roas, tierByInput) {
-    roas = roas || ROAS;
-    var midia = h / roas;
-    var bruto = h - midia;
-    var tierBase = tierByInput ? h : bruto; // a faixa é definida pelo honorário gerado no mês
-    var tier = 0;
-    for (var i = 0; i < TIERS.length; i++) { if (tierBase <= TIERS[i][0]) { tier = i; break; } }
-    var aliq = TIERS[tier][1], fixo = TIERS[tier][2];
-    var base = Math.max(0, bruto - fixo);
-    var parte = aliq === null ? Math.min(2000, base) : aliq * base;
-    var piso = aliq === null;
-    var sobra = Math.max(0, base - parte);
-    var share = base > 0 ? sobra / base : 0;
-    return { h: h, midia: midia, bruto: bruto, tier: tier, aliq: aliq, fixo: fixo, base: base,
-      parte: parte, piso: piso, sobra: sobra, share: share, custos: midia + fixo };
-  }
-
-  function faixaMsgShort(r) {
-    if (r.h <= 0 || r.tier === 0) return '';
-    return 'Você está na <strong>faixa ' + (r.tier + 1) + ' de 6</strong>: do que sobra depois dos custos, <strong>' + SHARES[r.tier] + '% é seu</strong>.';
-  }
-
-  function pctShare(r) { return Math.round(r.share * 100); }
-  function pctPosMidia(r) { return r.bruto > 0 ? Math.round(r.sobra / r.bruto * 100) : 0; } // fatia sobre o que sobra só depois da mídia (antes da estrutura)
   function set(id, v) { document.getElementById(id).textContent = v; }
   function setHTML(id, v) { document.getElementById(id).innerHTML = v; }
 
-  var roas = 4;
+  function faixaMsg(r) {
+    if (r.h <= 0 || r.piso) return '';
+    return 'Você está na <strong>faixa ' + (r.tier + 1) + ' de ' + FAIXAS.faixas.length + '</strong>: do que sobra depois dos custos, <strong>' + pct(1 - r.aliquota) + ' é seu</strong>.';
+  }
+
+  var roas = FAIXAS.roas_default;
   function render() {
-    var r = engine(parse(document.getElementById('hon-e')), roas, true);
+    var r = engine(parse(input), roas);
     set('ext-hon-e', brl(r.h));
     set('ext-midia-e', '− ' + brl(r.midia));
-    set('ext-fixo-e', '− ' + brl(r.fixo));
+    set('ext-fixo-e', '− ' + brl(r.estrutura));
     set('ext-base-e', brl(r.base));
     set('split-voce-e', brl(r.sobra));
-    set('split-voce-lbl-e', pctShare(r) + '% após os custos é seu, ' + pctPosMidia(r) + '% após o custo de mídia');
+    set('split-voce-lbl-e', pct(r.share) + ' após os custos é seu, ' + pct(r.sharePosMidia) + ' após o custo de mídia');
     set('split-eu-e', brl(r.parte));
-    set('split-eu-lbl-e', r.piso ? 'meu piso de R$ 2.000' : (100 - pctShare(r)) + '% pra mim');
-    setHTML('msg-e', faixaMsgShort(r));
-    var rows = document.querySelectorAll('#tbl-e tbody tr');
-    rows.forEach(function (tr, i) { tr.classList.toggle('on2', i === r.tier); });
+    set('split-eu-lbl-e', r.piso ? 'meu piso de ' + brl(FAIXAS.piso) : pct(1 - r.share) + ' pra mim');
+    setHTML('msg-e', faixaMsg(r));
+    document.querySelectorAll('#tbl-faixas tr').forEach(function (tr, i) { tr.classList.toggle('on2', i === r.tier); });
   }
 
   document.querySelectorAll('.roas-pill').forEach(function (btn) {
@@ -586,19 +648,7 @@
       btn.textContent = open ? 'fechar' : 'detalhes';
     });
   });
-  document.getElementById('hon-e').addEventListener('input', render);
+  input.addEventListener('input', render);
   render();
-
-  /* gabarito: h=12.000, ROAS 4 → faixa 2, mídia 3.000, fixo 800, base 8.200, parte 2.460, sobra 5.740, 70% */
-  var g3 = engine(12000, 4, true);
-  console.assert(g3.tier === 1 && g3.midia === 3000 && Math.round(g3.parte) === 2460 && Math.round(g3.sobra) === 5740, 'faixa 2 errada', g3);
-  console.assert(pctShare(g3) === 70 && pctPosMidia(g3) === 64, 'fatia pós-mídia errada', pctPosMidia(g3));
-  console.assert(Math.round(g3.share * 100) === 70, 'share da faixa 2 errado', g3);
-  /* h=16.000 cai na faixa 3 pelo gerado (o líquido daria faixa 2): fixo 1.600, mídia 4.000, base 10.400, parte 2.600, sobra 7.800, 75% */
-  var g4 = engine(16000, 4, true);
-  console.assert(g4.tier === 2 && g4.fixo === 1600 && Math.round(g4.sobra) === 7800 && Math.round(g4.share * 100) === 75, 'faixa pelo gerado errada', g4);
-  /* sem piso da faixa 2 em diante: h=9.600, ROAS 5 → mídia 1.920, fixo 800, base 6.880, parte 2.064, sobra 4.816, 70% */
-  var g5 = engine(9600, 5, true);
-  console.assert(g5.tier === 1 && Math.round(g5.parte) === 2064 && Math.round(g5.sobra) === 4816 && Math.round(g5.share * 100) === 70, 'piso indevido fora da faixa 1', g5);
 })();
 </script>
