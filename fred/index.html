@@ -534,7 +534,8 @@ var FAIXAS = {
    Mudou a escada ali, mudam simulador, proposta e as tabelas de exemplo das duas. */
 
 function brl(v) { return 'R$ ' + Math.round(v).toLocaleString('pt-BR'); }
-function pct(a) { return Math.round(a * 100) + '%'; }
+/* alíquota quebrada (27,5%) não pode virar 28% na tabela: só arredonda quando é inteira */
+function pct(a) { var v = a * 100; return (Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : v.toFixed(1).replace('.', ',')) + '%'; }
 
 function faixaDe(h) {
   for (var i = 0; i < FAIXAS.faixas.length; i++) {
