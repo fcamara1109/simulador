@@ -551,6 +551,7 @@
   }
 
   function pctShare(r) { return Math.round(r.share * 100); }
+  function pctPosMidia(r) { return r.bruto > 0 ? Math.round(r.sobra / r.bruto * 100) : 0; } // fatia sobre o que sobra só depois da mídia (antes da estrutura)
   function set(id, v) { document.getElementById(id).textContent = v; }
   function setHTML(id, v) { document.getElementById(id).innerHTML = v; }
 
@@ -562,7 +563,7 @@
     set('ext-fixo-e', '− ' + brl(r.fixo));
     set('ext-base-e', brl(r.base));
     set('split-voce-e', brl(r.sobra));
-    set('split-voce-lbl-e', pctShare(r) + '% pra você');
+    set('split-voce-lbl-e', pctShare(r) + '% após os custos é seu, ' + pctPosMidia(r) + '% após o custo de mídia');
     set('split-eu-e', brl(r.parte));
     set('split-eu-lbl-e', r.piso ? 'meu piso de R$ 2.000' : (100 - pctShare(r)) + '% pra mim');
     setHTML('msg-e', faixaMsgShort(r));
@@ -591,6 +592,7 @@
   /* gabarito: h=12.000, ROAS 4 → faixa 2, mídia 3.000, fixo 800, base 8.200, parte 2.460, sobra 5.740, 70% */
   var g3 = engine(12000, 4, true);
   console.assert(g3.tier === 1 && g3.midia === 3000 && Math.round(g3.parte) === 2460 && Math.round(g3.sobra) === 5740, 'faixa 2 errada', g3);
+  console.assert(pctShare(g3) === 70 && pctPosMidia(g3) === 64, 'fatia pós-mídia errada', pctPosMidia(g3));
   console.assert(Math.round(g3.share * 100) === 70, 'share da faixa 2 errado', g3);
   /* h=16.000 cai na faixa 3 pelo gerado (o líquido daria faixa 2): fixo 1.600, mídia 4.000, base 10.400, parte 2.600, sobra 7.800, 75% */
   var g4 = engine(16000, 4, true);
