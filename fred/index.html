@@ -356,37 +356,7 @@
     </script>
   </section>
 
-  <section>
-    <h2>O que eu entrego</h2>
-    <p class="section-note">Dois eixos, ligados à conta lá de cima. Um sobe os seus <strong>agendamentos</strong>. O outro sobe o seu <strong>valor-hora</strong>.</p>
-    <div class="axes">
-      <div class="axis">
-        <div class="axis-head">
-          <span class="axis-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M8 2v4M16 2v4M3 10h18"/></svg></span>
-          <span class="axis-title">Mais agendamentos<span>a demanda que chega até você</span></span>
-        </div>
-        <ul class="tight">
-          <li><b>Página de captação</b> feita pra virar consulta, não só informar</li>
-          <li><b>Reputação</b> no Google e no Doctoralia</li>
-          <li><b>Atendimento por IA no WhatsApp</b>: responde na hora, qualifica e agenda</li>
-          <li><b>Anúncios</b> no Meta e no Google</li>
-          <li><b>Orientação de Instagram</b>: eu defino o conteúdo, você grava</li>
-          <li><b>Acompanhamento e relatórios</b> do que entra e do que fecha</li>
-        </ul>
-      </div>
-      <div class="axis">
-        <div class="axis-head">
-          <span class="axis-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
-          <span class="axis-title">Maior valor-hora<span>onde mora a maior parte do dinheiro que profissional bom deixa na mesa</span></span>
-        </div>
-        <ul class="tight">
-          <li><b>Precificação</b> dos seus atendimentos e serviços</li>
-          <li><b>Negociação de honorários e repasses</b> com paciente, convênio (escolha de mix), clínica e hospital</li>
-          <li><b>Estrutura de cobrança</b>: o que vai como particular, o que vai pelo convênio</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+
 
 
 
@@ -616,7 +586,7 @@ function renderTabelas() {
 
   function faixaMsg(r) {
     if (r.h <= 0 || r.piso) return '';
-    return 'Você está na <strong>faixa ' + (r.tier + 1) + ' de ' + FAIXAS.faixas.length + '</strong>: do que sobra depois dos custos, <strong>' + pct(1 - r.aliquota) + ' é seu</strong>.';
+    return 'Você está na <strong>faixa ' + (r.tier + 1) + '</strong>';
   }
 
   var roas = FAIXAS.roas_default;
@@ -627,7 +597,7 @@ function renderTabelas() {
     set('ext-fixo-e', '− ' + brl(r.estrutura));
     set('ext-base-e', brl(r.base));
     set('split-voce-e', brl(r.sobra));
-    set('split-voce-lbl-e', pct(r.share) + ' após os custos é seu, ' + pct(r.sharePosMidia) + ' após o custo de mídia');
+    setHTML('split-voce-lbl-e', pct(r.share) + ' após os custos totais é seu<br>Olhando só para custo de mídia, seria ' + pct(r.sharePosMidia) + '.');
     set('split-eu-e', brl(r.parte));
     set('split-eu-lbl-e', r.piso ? 'meu mínimo de ' + brl(FAIXAS.piso) + ' no mês' : pct(1 - r.share) + ' pra mim');
     setHTML('msg-e', faixaMsg(r));
