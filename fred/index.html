@@ -440,7 +440,7 @@
             <li><b>API oficial do WhatsApp</b>, cobrada por mensagem: é o custo que mais cresce quando a operação ganha escala</li>
             <li><b>Softwares e serviços cobrados por uso</b>, que entram conforme a operação pede</li>
           </ul>
-          <p>O custo fixo da sua faixa é a sua fração dessa estrutura. Ela fica mais robusta (e mais cara) conforme a operação cresce: por isso ele acompanha a faixa, e só sobe quando o seu resultado sobe.</p>
+          <p>O custo fixo da sua faixa é a sua fração dessa estrutura. Ela fica mais robusta (e mais cara) conforme a operação cresce: por isso ele acompanha a faixa, e só sobe quando o seu resultado sobe. No começo ele nem é cobrado à parte: enquanto o volume ainda não existe, o valor mínimo do mês já cobre tudo.</p>
         </div>
         <div class="ext-row total"><span class="lbl">Sobra depois dos custos</span><span class="val" id="ext-base-e"></span></div>
       </div>
@@ -456,7 +456,7 @@
         </div>
       </div>
 
-      <p class="rule-note">As fatias valem sobre o que sobra depois da mídia e da estrutura. Quanto mais o funil gera, maior a sua fatia.</p>
+      <p class="rule-note">As fatias valem sobre o que sobra depois da mídia e da estrutura. Quanto mais o funil gera, maior a sua fatia. Existe um valor mínimo por mês (o da primeira linha da tabela): é o que eu recebo enquanto o funil ainda não gerou volume, e ele para de valer sozinho assim que a conta da sua faixa passa dele.</p>
     </div>
 
     <hr class="subtle">
@@ -516,17 +516,14 @@
 
 <script>
 var FAIXAS = {
-  "piso": 2000,
+  "piso": 1200,
   "roas_default": 4,
   "horas_mes_exemplo": 48,
   "midia_pct_exemplo": 0.30,
   "faixas": [
-    { "rotulo": "Até 7,5 mil", "rotulo_longo": "Até R$ 7,5 mil", "ate": 7500, "aliquota": null, "estrutura": 500 },
-    { "rotulo": "7,5 a 15 mil", "rotulo_longo": "R$ 7,5 mil a 15 mil", "ate": 15000, "aliquota": 0.30, "estrutura": 800 },
-    { "rotulo": "15 a 30 mil", "rotulo_longo": "R$ 15 mil a 30 mil", "ate": 30000, "aliquota": 0.25, "estrutura": 1600 },
-    { "rotulo": "30 a 50 mil", "rotulo_longo": "R$ 30 mil a 50 mil", "ate": 50000, "aliquota": 0.20, "estrutura": 3200 },
-    { "rotulo": "50 a 100 mil", "rotulo_longo": "R$ 50 mil a 100 mil", "ate": 100000, "aliquota": 0.15, "estrutura": 4800 },
-    { "rotulo": "Acima de 100 mil", "rotulo_longo": "Acima de R$ 100 mil", "ate": null, "aliquota": 0.10, "estrutura": 6400 }
+    { "rotulo": "Até 4,8 mil", "rotulo_longo": "Até R$ 4,8 mil", "ate": 4800, "aliquota": null, "estrutura": 0 },
+    { "rotulo": "4,8 a 30 mil", "rotulo_longo": "R$ 4,8 mil a 30 mil", "ate": 30000, "aliquota": 0.267, "estrutura": 325 },
+    { "rotulo": "Acima de 30 mil", "rotulo_longo": "Acima de R$ 30 mil", "ate": null, "aliquota": 0.12, "estrutura": 4000 }
   ]
 };
 
@@ -545,17 +542,20 @@ function faixaDe(h) {
 }
 
 /* A faixa vem do honorário gerado no mês. A base é ele menos a mídia e menos a estrutura.
-   Na faixa 1 a minha parte é o piso no lugar da alíquota. */
+   `piso` é o mínimo MENSAL e vale na escada inteira: é piso do que eu recebo, nunca teto.
+   A 1ª faixa não é caso especial, é só a região em que o mínimo ainda ganha da conta percentual. */
 function engine(h, roas) {
   var midia = h / (roas || FAIXAS.roas_default);
   var bruto = h - midia;
   var f = FAIXAS.faixas[faixaDe(h)];
   var base = Math.max(0, bruto - f.estrutura);
-  var parte = f.aliquota === null ? Math.min(FAIXAS.piso, base) : f.aliquota * base;
+  var conta = (f.aliquota === null ? 0 : f.aliquota * base) + f.estrutura;
+  var recebo = Math.max(FAIXAS.piso, conta);
+  var parte = recebo - f.estrutura;
   var sobra = Math.max(0, base - parte);
   return {
     h: h, midia: midia, bruto: bruto, tier: faixaDe(h), aliquota: f.aliquota, estrutura: f.estrutura,
-    base: base, parte: parte, piso: f.aliquota === null, sobra: sobra,
+    base: base, parte: parte, recebo: recebo, piso: conta < FAIXAS.piso, sobra: sobra,
     share: base > 0 ? sobra / base : 0,
     sharePosMidia: bruto > 0 ? sobra / bruto : 0
   };
@@ -629,7 +629,7 @@ function renderTabelas() {
     set('split-voce-e', brl(r.sobra));
     set('split-voce-lbl-e', pct(r.share) + ' após os custos é seu, ' + pct(r.sharePosMidia) + ' após o custo de mídia');
     set('split-eu-e', brl(r.parte));
-    set('split-eu-lbl-e', r.piso ? 'meu piso de ' + brl(FAIXAS.piso) : pct(1 - r.share) + ' pra mim');
+    set('split-eu-lbl-e', r.piso ? 'meu mínimo de ' + brl(FAIXAS.piso) + ' no mês' : pct(1 - r.share) + ' pra mim');
     setHTML('msg-e', faixaMsg(r));
     document.querySelectorAll('#tbl-faixas tr').forEach(function (tr, i) { tr.classList.toggle('on2', i === r.tier); });
   }
